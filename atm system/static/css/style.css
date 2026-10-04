@@ -1,0 +1,867 @@
+/* ==========================================================================
+   ATM BANKING KIOSK — MODERN STYLING & ANIMATIONS
+   ========================================================================== */
+
+:root {
+  --bg-dark: #0b0f19;
+  --kiosk-frame: #1e2538;
+  --kiosk-border: #2e3852;
+  --screen-bg: #0d1322;
+  --screen-card: rgba(22, 30, 49, 0.75);
+  --primary-accent: #00e599;
+  --primary-glow: rgba(0, 229, 153, 0.35);
+  --gold-accent: #f59e0b;
+  --gold-glow: rgba(245, 158, 11, 0.25);
+  --danger: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.3);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --btn-keypad: #252e45;
+  --btn-keypad-shadow: #141a29;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(0, 229, 153, 0.08), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(245, 158, 11, 0.05), transparent 40%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Kiosk Cabinet Container */
+.atm-cabinet {
+  width: 100%;
+  max-width: 1060px;
+  background: linear-gradient(145deg, #1b2234, #141926);
+  border: 2px solid var(--kiosk-border);
+  border-radius: 28px;
+  box-shadow: 
+    0 25px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(0, 229, 153, 0.05);
+  padding: 28px;
+  position: relative;
+}
+
+/* Kiosk Header */
+.kiosk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+
+.bank-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bank-logo {
+  font-size: 32px;
+  filter: drop-shadow(0 0 10px var(--primary-glow));
+}
+
+.bank-name {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bank-tagline {
+  font-size: 11px;
+  color: var(--primary-accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.kiosk-status-panel {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 229, 153, 0.1);
+  border: 1px solid rgba(0, 229, 153, 0.25);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-accent);
+}
+
+.led-pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--primary-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary-accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.live-clock {
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.audio-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--kiosk-border);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.audio-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Layout Grid */
+.kiosk-body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+}
+
+@media (max-width: 900px) {
+  .kiosk-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Touchscreen Frame */
+.screen-frame {
+  background: var(--screen-bg);
+  border: 3px solid #1a233a;
+  border-radius: 20px;
+  box-shadow: 
+    inset 0 0 25px rgba(0, 0, 0, 0.8),
+    0 10px 25px rgba(0, 0, 0, 0.5);
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Screen Header Bar */
+.screen-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.screen-title {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+/* Card Views */
+.view-container {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.view-container.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome & Card Slot View */
+.welcome-hero {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.welcome-hero h1 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.welcome-hero p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* EMV Credit Card Graphic */
+.virtual-card-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.emv-card {
+  width: 280px;
+  height: 160px;
+  background: linear-gradient(135deg, #1e3a8a, #0f172a 70%);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.emv-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.emv-chip {
+  width: 36px;
+  height: 28px;
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  border-radius: 6px;
+  border: 1px solid #7c5c00;
+}
+
+.card-num-preview {
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #e2e8f0;
+}
+
+.card-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.card-holder-name {
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* User Pill Selection for Fast Testing */
+.quick-users-bar {
+  margin-top: auto;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.quick-users-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-pills {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.user-pill-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.user-pill-btn:hover {
+  background: rgba(0, 229, 153, 0.15);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+/* PIN Screen Input Dots */
+.pin-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pin-dots {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.pin-dot {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #475569;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.pin-dot.filled {
+  background: var(--primary-accent);
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 12px var(--primary-accent);
+}
+
+.pin-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Dashboard View */
+.account-hero-card {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(15, 23, 42, 0.6));
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.account-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.user-greeting {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.account-number-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.balance-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.balance-amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.balance-val {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary-accent);
+  text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.eye-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Dashboard Action Tiles */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+
+.action-card {
+  background: var(--screen-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.action-card:hover {
+  background: rgba(37, 46, 69, 0.8);
+  border-color: var(--primary-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.action-icon {
+  font-size: 26px;
+}
+
+.action-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.action-info p {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Input Fields & Forms */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--kiosk-border);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* Quick Cash Buttons */
+.quick-cash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.quick-cash-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-cash-btn:hover {
+  background: rgba(0, 229, 153, 0.15);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+/* Action Buttons */
+.btn-primary {
+  width: 100%;
+  background: var(--primary-accent);
+  color: #0b0f19;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.btn-secondary {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--kiosk-border);
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Mini Statement Table */
+.statement-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 280px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.statement-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.statement-table th {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 12px;
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+}
+
+.statement-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-withdraw {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-deposit {
+  background: rgba(0, 229, 153, 0.15);
+  color: var(--primary-accent);
+  border: 1px solid rgba(0, 229, 153, 0.3);
+}
+
+/* Hardware Peripherals Column */
+.kiosk-peripherals {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card Slot Peripheral */
+.card-reader-module {
+  background: #181f30;
+  border: 2px solid var(--kiosk-border);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+.peripheral-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.card-slot-bezel {
+  width: 100%;
+  height: 18px;
+  background: #0d111a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-slot-led {
+  width: 40px;
+  height: 3px;
+  background: var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-accent);
+  border-radius: 2px;
+  animation: cardLedBlink 1.5s infinite;
+}
+
+@keyframes cardLedBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ATM Physical Hardware Keypad */
+.keypad-module {
+  background: #181f30;
+  border: 2px solid var(--kiosk-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.2fr;
+  gap: 8px;
+}
+
+.key-btn {
+  background: linear-gradient(180deg, #2a344d, #1c2336);
+  border: 1px solid #3e4c6d;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 0;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--btn-keypad-shadow);
+  transition: all 0.1s;
+  user-select: none;
+}
+
+.key-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-keypad-shadow);
+}
+
+.key-action-cancel {
+  background: linear-gradient(180deg, #dc2626, #991b1b);
+  border-color: #ef4444;
+  font-size: 13px;
+  color: #fff;
+  box-shadow: 0 4px 0 #5f1010;
+}
+
+.key-action-clear {
+  background: linear-gradient(180deg, #d97706, #92400e);
+  border-color: #f59e0b;
+  font-size: 13px;
+  color: #fff;
+  box-shadow: 0 4px 0 #592908;
+}
+
+.key-action-enter {
+  background: linear-gradient(180deg, #059669, #065f46);
+  border-color: #10b981;
+  font-size: 13px;
+  color: #fff;
+  box-shadow: 0 4px 0 #043828;
+}
+
+/* Cash Dispenser Slot & Animated Notes */
+.cash-dispenser-module {
+  background: #181f30;
+  border: 2px solid var(--kiosk-border);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+}
+
+.cash-slot-bezel {
+  width: 100%;
+  height: 24px;
+  background: #090c14;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.9);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cash-led-strip {
+  width: 80%;
+  height: 2px;
+  background: var(--primary-accent);
+  box-shadow: 0 0 8px var(--primary-accent);
+}
+
+/* Animated Dispensing Note */
+.dispensed-note {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  width: 180px;
+  height: 80px;
+  background: linear-gradient(135deg, #10b981, #065f46);
+  border: 2px dashed #a7f3d0;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dispensed-note.ejected {
+  opacity: 1;
+  transform: translateX(-50%) translateY(90px);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Receipt Paper Slot */
+.receipt-module {
+  background: #181f30;
+  border: 2px solid var(--kiosk-border);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+}
+
+.receipt-paper-slip {
+  background: #fff;
+  color: #1e293b;
+  font-family: monospace;
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  display: none;
+  animation: receiptSlide 0.6s ease-out;
+  text-align: left;
+}
+
+@keyframes receiptSlide {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  animation: toastIn 0.3s ease;
+}
+
+.toast.success { border-color: var(--primary-accent); color: var(--primary-accent); }
+.toast.error { border-color: var(--danger); color: var(--danger); }
+
+@keyframes toastIn {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
