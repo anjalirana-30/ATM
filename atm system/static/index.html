@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏧 ATM Banking Kiosk System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ATM KIOSK CABINET CONTAINER -->
+  <div class="atm-cabinet">
+
+    <!-- KIOSK HEADER -->
+    <header class="kiosk-header">
+      <div class="bank-brand">
+        <div class="bank-logo">🏧</div>
+        <div>
+          <div class="bank-name">METRO APEX BANK</div>
+          <div class="bank-tagline">24/7 Smart Automated Teller Machine</div>
+        </div>
+      </div>
+
+      <div class="kiosk-status-panel">
+        <div class="status-indicator">
+          <div class="led-pulse"></div>
+          <span>ATM ONLINE</span>
+        </div>
+        <div class="live-clock" id="live-clock">--:--:--</div>
+        <button class="audio-toggle-btn" id="audio-toggle">🔊 Sound On</button>
+      </div>
+    </header>
+
+    <!-- KIOSK BODY (TOUCHSCREEN + HARDWARE PERIPHERALS) -->
+    <div class="kiosk-body">
+
+      <!-- COLUMN 1: TOUCHSCREEN FRAME -->
+      <section class="screen-frame">
+        <div class="screen-content">
+
+          <!-- SCREEN TOP NAVIGATION BAR -->
+          <div class="screen-top-bar">
+            <button class="audio-toggle-btn" id="screen-back-btn" style="display: none;">◀ Back</button>
+            <div class="screen-title" id="screen-title">🏧 METRO ATM OS</div>
+            <div style="font-size: 11px; color: #64748b;">SECURITY ENCRYPTED</div>
+          </div>
+
+          <!-- VIEW 1: WELCOME & CARD INSERT -->
+          <div class="view-container active" id="view-welcome">
+            <div class="welcome-hero">
+              <h1>WELCOME TO METRO BANK</h1>
+              <p>Please insert your debit card or select a demo account to begin</p>
+            </div>
+
+            <!-- ANIMATED EMV CARD -->
+            <div class="virtual-card-container">
+              <div class="emv-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div class="emv-chip"></div>
+                  <div style="font-size: 14px; font-weight: 800; color: #93c5fd;">METRO PLATINUM</div>
+                </div>
+                <div class="card-num-preview" id="card-preview-num">4524 •••• •••• 4524</div>
+                <div class="card-bottom-row">
+                  <div>
+                    <div>CARD HOLDER</div>
+                    <div class="card-holder-name" id="card-preview-holder">SELECT DEMO USER</div>
+                  </div>
+                  <div>
+                    <div>EXPIRES</div>
+                    <div style="color: #fff; font-weight: 700;">10/29</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MANUAL USER ID INPUT -->
+            <div style="max-width: 340px; margin: 0 auto; width: 100%;">
+              <div class="form-group">
+                <label class="form-label" for="login-user-id">Or Enter User ID Manually:</label>
+                <input type="text" class="form-input" id="login-user-id" placeholder="e.g. A111" style="text-align: center; text-transform: uppercase;">
+              </div>
+              <button class="btn-primary" onclick="proceedToPin()">
+                <span>Insert Card / Proceed to PIN</span> ➔
+              </button>
+            </div>
+
+            <!-- QUICK DEMO USERS PILLS -->
+            <div class="quick-users-bar">
+              <div class="quick-users-label">Quick Demo Accounts (1-Click Test)</div>
+              <div class="user-pills">
+                <button class="user-pill-btn" data-id="A111" data-name="Anjali" data-card="452452">
+                  <span>👤 Anjali (A111)</span> <small style="color: var(--primary-accent);">₹10k</small>
+                </button>
+                <button class="user-pill-btn" data-id="H112" data-name="Honey" data-card="784152">
+                  <span>👤 Honey (H112)</span> <small style="color: var(--primary-accent);">₹20k</small>
+                </button>
+                <button class="user-pill-btn" data-id="H113" data-name="Harsh" data-card="748596">
+                  <span>👤 Harsh (H113)</span> <small style="color: var(--primary-accent);">₹25k</small>
+                </button>
+                <button class="user-pill-btn" data-id="K114" data-name="Keval" data-card="965263">
+                  <span>👤 Keval (K114)</span> <small style="color: var(--primary-accent);">₹80k</small>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW 2: PIN ENTRY SCREEN -->
+          <div class="view-container" id="view-pin">
+            <div class="welcome-hero">
+              <h1>ENTER YOUR 4-DIGIT PIN</h1>
+              <p>Please enter your secret personal identification number</p>
+            </div>
+
+            <div class="pin-display-container">
+              <div class="pin-dots">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+              </div>
+              <div class="pin-hint">Use the hardware keypad on the right or press keys below</div>
+            </div>
+
+            <div style="max-width: 280px; margin: 0 auto; width: 100%; display: flex; gap: 10px;">
+              <button class="btn-secondary" onclick="switchView('welcome')">Cancel</button>
+              <button class="btn-primary" onclick="submitLogin()">Submit</button>
+            </div>
+          </div>
+
+          <!-- VIEW 3: MAIN DASHBOARD -->
+          <div class="view-container" id="view-dashboard">
+            <!-- ACCOUNT HERO BALANCE CARD -->
+            <div class="account-hero-card">
+              <div class="account-hero-header">
+                <div>
+                  <div class="user-greeting">Welcome, <span id="dash-user-name">Customer</span> 👋</div>
+                  <div class="account-number-tag">A/C: <span id="dash-acc-no">******452452</span></div>
+                </div>
+                <button class="eye-toggle-btn" id="eye-toggle-btn" title="Toggle balance privacy">👁</button>
+              </div>
+              <div class="balance-label">Available Balance</div>
+              <div class="balance-amount-row">
+                <div class="balance-val" id="dash-balance-val">₹10,000</div>
+              </div>
+            </div>
+
+            <!-- ACTION TILES GRID -->
+            <div class="action-grid">
+              <div class="action-card" data-action="withdraw">
+                <div class="action-icon">💰</div>
+                <div class="action-info">
+                  <h4>Withdraw Cash</h4>
+                  <p>₹500 note multiples</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="deposit">
+                <div class="action-icon">💵</div>
+                <div class="action-info">
+                  <h4>Deposit Cash</h4>
+                  <p>Deposit > ₹3,000</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="quick-cash">
+                <div class="action-icon">⚡</div>
+                <div class="action-info">
+                  <h4>Quick Withdraw</h4>
+                  <p>Preset standard amounts</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="statement">
+                <div class="action-icon">📄</div>
+                <div class="action-info">
+                  <h4>Mini Statement</h4>
+                  <p>View history & slips</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="details">
+                <div class="action-icon">👤</div>
+                <div class="action-info">
+                  <h4>Account Details</h4>
+                  <p>View profile & masks</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="change-pin">
+                <div class="action-icon">🔑</div>
+                <div class="action-info">
+                  <h4>Change PIN</h4>
+                  <p>Update 4-digit code</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="register">
+                <div class="action-icon">➕</div>
+                <div class="action-info">
+                  <h4>New User</h4>
+                  <p>Register new account</p>
+                </div>
+              </div>
+
+              <div class="action-card" data-action="logout" style="border-color: rgba(239, 68, 68, 0.3);">
+                <div class="action-icon">🚪</div>
+                <div class="action-info">
+                  <h4 style="color: #ef4444;">Logout</h4>
+                  <p>End ATM session</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW 4: WITHDRAW VIEW -->
+          <div class="view-container" id="view-withdraw">
+            <div class="welcome-hero" style="margin-bottom: 16px;">
+              <h1>💰 CASH WITHDRAWAL</h1>
+              <p>ATM dispenses ₹500 notes only</p>
+            </div>
+
+            <div style="max-width: 360px; margin: 0 auto; width: 100%;">
+              <div class="form-group">
+                <label class="form-label" for="custom-withdraw-amt">Enter Amount (Multiples of ₹500):</label>
+                <input type="number" step="500" min="500" class="form-input" id="custom-withdraw-amt" placeholder="e.g. 2000" style="font-size: 20px; font-weight: 700; text-align: center;">
+              </div>
+              <button class="btn-primary" id="btn-custom-withdraw">Dispense Cash 💵</button>
+              <button class="btn-secondary" onclick="switchView('dashboard')">Cancel</button>
+            </div>
+          </div>
+
+          <!-- VIEW 5: DEPOSIT VIEW -->
+          <div class="view-container" id="view-deposit">
+            <div class="welcome-hero" style="margin-bottom: 16px;">
+              <h1>💵 CASH DEPOSIT</h1>
+              <p>Minimum deposit must be greater than ₹3,000 in ₹500 notes</p>
+            </div>
+
+            <div style="max-width: 360px; margin: 0 auto; width: 100%;">
+              <div class="form-group">
+                <label class="form-label" for="deposit-amt-input">Enter Deposit Amount (₹):</label>
+                <input type="number" step="500" min="3500" class="form-input" id="deposit-amt-input" placeholder="e.g. 5000" style="font-size: 20px; font-weight: 700; text-align: center;">
+              </div>
+              <button class="btn-primary" id="btn-submit-deposit">Feed Cash & Credit 📥</button>
+              <button class="btn-secondary" onclick="switchView('dashboard')">Cancel</button>
+            </div>
+          </div>
+
+          <!-- VIEW 6: QUICK WITHDRAW VIEW -->
+          <div class="view-container" id="view-quick-withdraw">
+            <div class="welcome-hero" style="margin-bottom: 20px;">
+              <h1>⚡ QUICK WITHDRAW</h1>
+              <p>Select a preset one-touch withdrawal amount</p>
+            </div>
+
+            <div class="quick-cash-grid">
+              <button class="quick-cash-btn" data-amt="500">₹500</button>
+              <button class="quick-cash-btn" data-amt="1000">₹1,000</button>
+              <button class="quick-cash-btn" data-amt="2000">₹2,000</button>
+              <button class="quick-cash-btn" data-amt="5000">₹5,000</button>
+              <button class="quick-cash-btn" data-amt="10000">₹10,000</button>
+              <button class="quick-cash-btn" onclick="switchView('withdraw')">Other Amount</button>
+            </div>
+
+            <button class="btn-secondary" onclick="switchView('dashboard')">Cancel</button>
+          </div>
+
+          <!-- VIEW 7: MINI STATEMENT VIEW -->
+          <div class="view-container" id="view-statement">
+            <div class="welcome-hero" style="margin-bottom: 12px;">
+              <h1>📄 MINI STATEMENT</h1>
+              <p>Recent transactions (newest first)</p>
+            </div>
+
+            <div class="statement-table-wrapper">
+              <table class="statement-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="statement-tbody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <button class="btn-secondary" onclick="switchView('dashboard')">Return to Dashboard</button>
+          </div>
+
+          <!-- VIEW 8: ACCOUNT DETAILS VIEW -->
+          <div class="view-container" id="view-details">
+            <div class="welcome-hero" style="margin-bottom: 16px;">
+              <h1>👤 ACCOUNT PROFILE</h1>
+              <p>Customer Information & Masked Security Data</p>
+            </div>
+
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--kiosk-border); border-radius: 12px; padding: 20px; max-width: 400px; margin: 0 auto; width: 100%;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-muted);">Account Holder</span>
+                <strong id="details-name" style="color: #fff;">-</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-muted);">User ID</span>
+                <strong id="details-user-id" style="color: var(--primary-accent);">-</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-muted);">Registered Phone</span>
+                <strong id="details-phone" style="color: #fff;">-</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-muted);">Account Number</span>
+                <strong id="details-acc-no" style="color: var(--gold-accent);">-</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 12px;">
+                <span style="color: var(--text-muted);">Current Balance</span>
+                <strong id="details-balance" style="color: var(--primary-accent); font-size: 18px;">-</strong>
+              </div>
+            </div>
+
+            <button class="btn-secondary" style="max-width: 400px; margin: 16px auto 0;" onclick="switchView('dashboard')">Return to Dashboard</button>
+          </div>
+
+          <!-- VIEW 9: CHANGE PIN VIEW -->
+          <div class="view-container" id="view-change-pin">
+            <div class="welcome-hero" style="margin-bottom: 16px;">
+              <h1>🔑 CHANGE PIN</h1>
+              <p>Enter your current PIN and choose a new 4-digit code</p>
+            </div>
+
+            <div style="max-width: 320px; margin: 0 auto; width: 100%;">
+              <div class="form-group">
+                <label class="form-label" for="pin-change-current">Current PIN:</label>
+                <input type="password" maxlength="4" class="form-input" id="pin-change-current" style="text-align: center;">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pin-change-new">New PIN (4 digits):</label>
+                <input type="password" maxlength="4" class="form-input" id="pin-change-new" style="text-align: center;">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pin-change-confirm">Confirm New PIN:</label>
+                <input type="password" maxlength="4" class="form-input" id="pin-change-confirm" style="text-align: center;">
+              </div>
+              <button class="btn-primary" id="btn-submit-pin-change">Update PIN</button>
+              <button class="btn-secondary" onclick="switchView('dashboard')">Cancel</button>
+            </div>
+          </div>
+
+          <!-- VIEW 10: REGISTER NEW USER VIEW -->
+          <div class="view-container" id="view-register">
+            <div class="welcome-hero" style="margin-bottom: 12px;">
+              <h1>👤 REGISTER NEW ACCOUNT</h1>
+              <p>Open a new simulated bank account</p>
+            </div>
+
+            <div style="max-width: 420px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div class="form-group" style="grid-column: span 2;">
+                <label class="form-label" for="reg-name">Full Customer Name:</label>
+                <input type="text" class="form-input" id="reg-name" placeholder="e.g. John Doe">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-phone">Phone Number:</label>
+                <input type="tel" class="form-input" id="reg-phone" placeholder="e.g. 9876543210">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-acc">Account Number:</label>
+                <input type="text" class="form-input" id="reg-acc" placeholder="e.g. 556677">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-id">User ID:</label>
+                <input type="text" class="form-input" id="reg-id" placeholder="e.g. J115" style="text-transform: uppercase;">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-pin">4-Digit PIN:</label>
+                <input type="password" maxlength="4" class="form-input" id="reg-pin" placeholder="****">
+              </div>
+              <div class="form-group" style="grid-column: span 2;">
+                <label class="form-label" for="reg-bal">Initial Deposit Balance (₹):</label>
+                <input type="number" min="0" step="100" class="form-input" id="reg-bal" placeholder="e.g. 5000">
+              </div>
+              <div style="grid-column: span 2; display: flex; gap: 10px;">
+                <button class="btn-secondary" onclick="switchView('welcome')">Cancel</button>
+                <button class="btn-primary" id="btn-submit-register">Create Account</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- COLUMN 2: HARDWARE PERIPHERALS -->
+      <aside class="kiosk-peripherals">
+
+        <!-- CARD READER MODULE -->
+        <div class="card-reader-module">
+          <div class="peripheral-title">Debit / Credit Card Reader</div>
+          <div class="card-slot-bezel">
+            <div class="card-slot-led"></div>
+          </div>
+        </div>
+
+        <!-- TACTILE ATM HARDWARE KEYPAD -->
+        <div class="keypad-module">
+          <div class="peripheral-title">Physical Keypad</div>
+          <div class="keypad-grid">
+            <button class="key-btn" data-key="1">1</button>
+            <button class="key-btn" data-key="2">2</button>
+            <button class="key-btn" data-key="3">3</button>
+            <button class="key-btn key-action-cancel" data-key="CANCEL">CANCEL</button>
+
+            <button class="key-btn" data-key="4">4</button>
+            <button class="key-btn" data-key="5">5</button>
+            <button class="key-btn" data-key="6">6</button>
+            <button class="key-btn key-action-clear" data-key="CLEAR">CLEAR</button>
+
+            <button class="key-btn" data-key="7">7</button>
+            <button class="key-btn" data-key="8">8</button>
+            <button class="key-btn" data-key="9">9</button>
+            <button class="key-btn key-action-enter" data-key="ENTER">ENTER</button>
+
+            <button class="key-btn" data-key="*">*</button>
+            <button class="key-btn" data-key="0">0</button>
+            <button class="key-btn" data-key="#">#</button>
+            <button class="key-btn" style="opacity: 0.2; pointer-events: none;">•</button>
+          </div>
+        </div>
+
+        <!-- CASH DISPENSER SLOT WITH ANIMATED BANKNOTE -->
+        <div class="cash-dispenser-module">
+          <div class="peripheral-title">Motorized Cash Dispenser</div>
+          <div class="cash-slot-bezel">
+            <div class="cash-led-strip"></div>
+          </div>
+          <!-- Ejected Physical Cash Note -->
+          <div class="dispensed-note" id="dispensed-note">
+            <div style="font-size: 10px; opacity: 0.8;">RESERVE BANK OF INDIA</div>
+            <div style="font-size: 20px;">₹500</div>
+            <div style="font-size: 11px; text-align: right;">COLLECT CASH</div>
+          </div>
+        </div>
+
+        <!-- THERMAL RECEIPT PRINTER TRAY -->
+        <div class="receipt-module">
+          <div class="peripheral-title">Thermal Receipt Printer</div>
+          <div class="card-slot-bezel" style="height: 10px;"></div>
+          <!-- Sliding Paper Slip -->
+          <div class="receipt-paper-slip" id="receipt-paper">
+            <!-- Rendered by JS on transaction completion -->
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <!-- FLOATING NOTIFICATIONS CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- APPLICATION CONTROLLER SCRIPT -->
+  <script src="js/app.js"></script>
+</body>
+</html>

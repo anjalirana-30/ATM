@@ -1,0 +1,66 @@
+{
+    "A111": {
+        "username": "Anjali",
+        "phone": "1234",
+        "acc_no": "452452",
+        "pin": "1414",
+        "user_id": "A111",
+        "avl_bal": 8000.0,
+        "history": {
+            "withdraw_history": [
+                {
+                    "txn_id": "TXN10002",
+                    "type": "Withdraw",
+                    "amount": 2000.0,
+                    "date_time": "02-10-2026 07:57:03",
+                    "balance_after": 8000.0
+                }
+            ],
+            "deposit_history": []
+        }
+    },
+    "H112": {
+        "username": "Honey",
+        "phone": "1244",
+        "acc_no": "784152",
+        "pin": "2563",
+        "user_id": "H112",
+        "avl_bal": 25000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": [
+                {
+                    "txn_id": "TXN10001",
+                    "type": "Deposit",
+                    "amount": 5000.0,
+                    "date_time": "02-10-2026 07:57:03",
+                    "balance_after": 25000.0
+                }
+            ]
+        }
+    },
+    "H113": {
+        "username": "Harsh",
+        "phone": "1734",
+        "acc_no": "748596",
+        "pin": "9988",
+        "user_id": "H113",
+        "avl_bal": 25000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    },
+    "K114": {
+        "username": "Keval",
+        "phone": "1234",
+        "acc_no": "965263",
+        "pin": "0125",
+        "user_id": "K114",
+        "avl_bal": 80000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    }
+}

@@ -1,0 +1,50 @@
+{
+    "A111": {
+        "username": "Anjali",
+        "phone": "1234",
+        "acc_no": "452452",
+        "pin": "1414",
+        "user_id": "A111",
+        "avl_bal": 10000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    },
+    "H112": {
+        "username": "Honey",
+        "phone": "1244",
+        "acc_no": "784152",
+        "pin": "2563",
+        "user_id": "H112",
+        "avl_bal": 20000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    },
+    "H113": {
+        "username": "Harsh",
+        "phone": "1734",
+        "acc_no": "748596",
+        "pin": "4785",
+        "user_id": "H113",
+        "avl_bal": 25000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    },
+    "K114": {
+        "username": "Keval",
+        "phone": "1234",
+        "acc_no": "965263",
+        "pin": "0125",
+        "user_id": "K114",
+        "avl_bal": 80000.0,
+        "history": {
+            "withdraw_history": [],
+            "deposit_history": []
+        }
+    }
+}
